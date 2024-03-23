@@ -1,13 +1,12 @@
 
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
 void main() {
   runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+  const MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +15,7 @@ class MyApp extends StatelessWidget {
       title: 'Praktikum 4',
       home: Scaffold(
         appBar: AppBar(
-          leading: Icon(Icons.arrow_back),
+          leading: const Icon(Icons.arrow_back),
           backgroundColor: Colors.red,
         ),
         body: ListView(
@@ -30,36 +29,36 @@ class MyApp extends StatelessWidget {
                 children: [
                   // Image
                   Container(
-                    padding: EdgeInsets.all(20),
-                    decoration: BoxDecoration(
+                    padding: const EdgeInsets.all(20),
+                    decoration: const BoxDecoration(
                       shape: BoxShape.circle,
                       color: Colors.lightBlueAccent,
                     ),
-                    child: Icon(
+                    child: const Icon(
                       Icons.person,
                       size: 30,
                     ),
                   ),
-                  SizedBox(height: 15,),
+                  const SizedBox(height: 15,),
                   // Nama
-                  Text(
+                  const Text(
                     "Nathanael Andra Wijaya",
                     style: TextStyle(
                       color: Colors.white,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-                  SizedBox(height: 5,),
+                  const SizedBox(height: 5,),
                   // NIM
-                  Text(
+                  const Text(
                     "21102201",
                     style: TextStyle(
                       color: Colors.white,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-                  SizedBox(height: 5,),
-                  Text(
+                  const SizedBox(height: 5,),
+                  const Text(
                     "Mahasiswa",
                     style: TextStyle(
                       color: Colors.white,
@@ -70,13 +69,13 @@ class MyApp extends StatelessWidget {
             ),
             // Column kedua
             Container(
-              margin: EdgeInsets.all(30),
-              padding: EdgeInsets.all(20),
+              margin: const EdgeInsets.all(30),
+              padding: const EdgeInsets.all(20),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(10),
-                color: Color(0xffFEF4F3),
+                color: const Color(0xffFEF4F3),
               ),
-              child: Column(
+              child: const Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
@@ -131,16 +130,16 @@ class MyApp extends StatelessWidget {
             ),
             // Column ketiga
             Container(
-              margin: EdgeInsets.all(30),
-              padding: EdgeInsets.all(20),
+              margin: const EdgeInsets.all(30),
+              padding: const EdgeInsets.all(20),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(10),
-                color: Color(0xffFEF4F3),
+                color: const Color(0xffFEF4F3),
               ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
+                  const Text(
                     "Pusat Bantuan",
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
@@ -150,18 +149,18 @@ class MyApp extends StatelessWidget {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text("Bantuan"),
+                      const Text("Bantuan"),
                       Image.asset(
                         "images/help.jpg",
                         scale: 15,
                       ),
                     ],
                   ),
-                  SizedBox(height: 15,),
+                  const SizedBox(height: 15,),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text("Laporkan Masalah"),
+                      const Text("Laporkan Masalah"),
                       Image.asset(
                         "images/lapor.png",
                         scale: 14,
