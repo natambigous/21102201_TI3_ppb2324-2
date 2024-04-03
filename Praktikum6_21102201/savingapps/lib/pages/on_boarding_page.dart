@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:savingapps/styles/colors.dart';
 import 'package:savingapps/styles/text_style.dart';
 
-
 class OnBoardingPage extends StatelessWidget {
-  const OnBoardingPage({super.key});
+  const OnBoardingPage({Key? key}) : super(key: key);
+  static const nameRoute = '/';
 
   @override
   Widget build(BuildContext context) {
@@ -51,7 +51,10 @@ class OnBoardingPage extends StatelessWidget {
                     height: 70,
                   ),
                   TextButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.pushNamedAndRemoveUntil(
+                          context, '/main', (route) => false);
+                    },
                     style: TextButton.styleFrom(
                       backgroundColor: kBlueRibbon,
                       padding: const EdgeInsets.symmetric(
