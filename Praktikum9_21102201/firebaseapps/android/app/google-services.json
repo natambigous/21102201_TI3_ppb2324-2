@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "956925056695",
+    "project_id": "project-flutter-pbb",
+    "storage_bucket": "project-flutter-pbb.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:956925056695:android:a1b8536ab408330d879f32",
+        "android_client_info": {
+          "package_name": "com.example.firebaseapps"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDo0B8xJdJZbTcJQS9CmHzlV7BKm5jKeHc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
