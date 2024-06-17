@@ -1,7 +1,6 @@
 import 'package:bloc/bloc.dart';
-
+import 'package:meta/meta.dart';
 import '../../repositories/auth_repo.dart';
-
 part 'register_state.dart';
 
 class RegisterCubit extends Cubit<RegisterState> {
@@ -9,13 +8,11 @@ class RegisterCubit extends Cubit<RegisterState> {
 
   final _repo = AuthRepo();
 
-  Future<void> register(
-      {required String email, required String password}) async {
+  Future<void> register({required String email, required String password}) async {
     emit(RegisterLoading());
 
     try {
       await _repo.register(email: email, password: password);
-
       emit(RegisterSuccess('Berhasil!'));
     } catch (e) {
       print(e);

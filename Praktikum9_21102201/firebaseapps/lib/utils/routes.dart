@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:firebaseapps/ui/homescreen.dart';
-import 'package:firebaseapps/ui/login.dart';
-import 'package:firebaseapps/ui/register.dart';
+import 'package:pertemuan_9/ui/home_screen.dart';
+import 'package:pertemuan_9/ui/login.dart';
+import 'package:pertemuan_9/ui/register.dart';
 
 MaterialPageRoute _pageRoute({required Widget body, required RouteSettings settings}) =>
     MaterialPageRoute(builder: (_) => body, settings: settings);
 
-Route? generateRoute(RouteSettings settings) {
-  Route? _route;
+Route<dynamic>? generateRoute(RouteSettings settings) {
+  Route<dynamic>? _route;
   final _args = settings.arguments;
+
   switch (settings.name) {
     case rLogin:
       _route = _pageRoute(body: LoginScreen(), settings: settings);
@@ -20,10 +21,12 @@ Route? generateRoute(RouteSettings settings) {
       _route = _pageRoute(body: HomeScreen(), settings: settings);
       break;
   }
+
   return _route;
 }
 
 final NAV_KEY = GlobalKey<NavigatorState>();
+
 const String rLogin = '/login';
 const String rRegister = '/register';
 const String rHome = '/home';

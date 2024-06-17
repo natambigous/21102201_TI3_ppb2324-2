@@ -1,7 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:firebaseapps/ui/homescreen.dart';
-
+import 'package:pertemuan_9/ui/home_screen.dart';
 
 class PhoneAuthScreen extends StatefulWidget {
   @override
@@ -9,73 +8,70 @@ class PhoneAuthScreen extends StatefulWidget {
 }
 
 class _PhoneAuthScreenState extends State<PhoneAuthScreen> {
-  FirebaseAuth auth = FirebaseAuth.instance;
-  bool otpVisibility = false;
-  User? user;
-  String verificationID = "";
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+  bool _otpVisibility = false;
+  User? _user;
+  String _verificationId = "";
+  final TextEditingController _phoneController = TextEditingController();
+  final TextEditingController _otpController = TextEditingController();
 
-  TextEditingController _phoneController = TextEditingController();
-  TextEditingController _otpController = TextEditingController();
+  @override
+  void dispose() {
+    _phoneController.dispose();
+    _otpController.dispose();
+    super.dispose();
+  }
 
+  void _loginWithPhone() async {
+    _auth.verifyPhoneNumber(
+      phoneNumber: "+62" + _phoneController.text,
+      timeout: const Duration(seconds: 60),
+      verificationCompleted: (PhoneAuthCredential credential) async {
+        await _auth.signInWithCredential(credential).then((value) {
+          print("You are logged in successfully");
+        });
+      },
+      verificationFailed: (FirebaseAuthException e) {
+        print(e.message);
+      },
+      codeSent: (String verificationId, int? resendToken) {
+        setState(() {
+          _otpVisibility = true;
+          _verificationId = verificationId;
+        });
+      },
+      codeAutoRetrievalTimeout: (String verificationId) {},
+    );
+  }
 
- @override
-void dispose() {
-  _phoneController.dispose();
-  _otpController.dispose();
-  super.dispose();
-}
-void loginWithPhone() async {
-  auth.verifyPhoneNumber(
-    phoneNumber: "+62" + _phoneController.text,
-    timeout: const Duration(seconds: 60),
-    verificationCompleted: (PhoneAuthCredential credential) async {
-      await auth.signInWithCredential(credential).then((value) {
-        print("You are logged in successfully");
-      });
-    },
-    verificationFailed: (FirebaseAuthException e) {
-      print(e.message);
-    },
-    codeSent: (String verificationId, int? resendToken) {
-      otpVisibility = true;
-      verificationID = verificationId;
-      setState(() {});
-    },
-    codeAutoRetrievalTimeout: (String verificationId) {},
-  );
-}
+  void _verifyOTP() async {
+    PhoneAuthCredential credential = PhoneAuthProvider.credential(
+      verificationId: _verificationId,
+      smsCode: _otpController.text,
+    );
 
-void verifyOTP() async {
-  PhoneAuthCredential credential = PhoneAuthProvider.credential(
-      verificationId: verificationID, smsCode: _otpController.text);
-
-  await auth.signInWithCredential(credential).then(
-    (value) {
+    await _auth.signInWithCredential(credential).then((value) {
       setState(() {
-        user = FirebaseAuth.instance.currentUser;
+        _user = FirebaseAuth.instance.currentUser;
       });
-    },
-  ).whenComplete(
-    () {
-      if (user != null) {
-        ScaffoldMessenger.of(context)
-          ..hideCurrentSnackBar()
-          ..showSnackBar(const SnackBar(content: Text('Berhasil Login')));
+    }).whenComplete(() {
+      if (_user != null) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Berhasil Login')),
+        );
         Navigator.pushReplacement(
           context,
-          MaterialPageRoute(
-            builder: (context) => HomeScreen(),
-          ),
+          MaterialPageRoute(builder: (context) => HomeScreen()),
         );
       } else {
-        ScaffoldMessenger.of(context)
-          ..hideCurrentSnackBar()
-          ..showSnackBar(const SnackBar(content: Text('Login Gagal')));
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Login Gagal')),
+        );
       }
-    },
-  );
-}
+    });
+  }
 
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
@@ -100,22 +96,22 @@ void verifyOTP() async {
                 ),
                 keyboardType: TextInputType.number,
               ),
-              visible: otpVisibility,
+              visible: _otpVisibility,
             ),
-            SizedBox(
-              height: 10,
-            ),
+            SizedBox(height: 10),
             MaterialButton(
               color: const Color(0xff3D4DE0),
               onPressed: () {
-                    if (otpVisibility) {
-                       verifyOTP();
-                       } else {
-                        loginWithPhone();
-                        }
-                    },
-              child: Text(otpVisibility ? "Verify" : "Login",
-                  style: TextStyle(color: Colors.white, fontSize: 20)),
+                if (_otpVisibility) {
+                  _verifyOTP();
+                } else {
+                  _loginWithPhone();
+                }
+              },
+              child: Text(
+                _otpVisibility ? "Verify" : "Login",
+                style: TextStyle(color: Colors.white, fontSize: 20),
+              ),
             ),
           ],
         ),
@@ -123,4 +119,3 @@ void verifyOTP() async {
     );
   }
 }
-
